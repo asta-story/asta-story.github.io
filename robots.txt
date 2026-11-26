@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asta-story.github.io/sitemap.xml
