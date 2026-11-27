@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://asta-story.github.io/sitemap.xml
+
+#DaumWebMasterTool:3330af926ff81e2e3f82a268c7461ae811093c40bb58d51c5cf8f571505e9e8e:bBY3xhlFAprgQb834vQqzA==
