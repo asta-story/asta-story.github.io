@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://asta-story.github.io/img/og.jpg">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"ASTA","url":"https://asta-story.github.io/","email":"buildup74.official@gmail.com","sameAs":["https://play.google.com/store/apps/details?id=com.astagodsaeng.app","https://www.youtube.com/@bulidup74","https://www.instagram.com/asta_life7/","https://blog.naver.com/asta_life"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"ASTA","url":"https://asta-story.github.io/","email":"buildup74.official@gmail.com","sameAs":["https://asta77.lovable.app","https://www.youtube.com/@ASTA74-q6b","https://www.instagram.com/asta_life7/","https://blog.naver.com/asta_life"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@200;300;500;600&family=IBM+Plex+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
@@ -167,10 +167,10 @@ footer{position:relative;z-index:5;background:#010207;border-top:1px solid rgba(
 <main>
 <section id="story" aria-label="이야기">
   <div class="stage" id="stage">
-    <div class="line hero" id="L0"><h1 aria-label="ASTA"><span>A</span><span>S</span><span>T</span><span>A</span></h1><p class="sub">북극성을 향한 항해</p></div>
-    <div class="line l-high" id="L1"><h2 class="mid">어둠이 찾아와도</h2><p class="sub2" id="L1s">앞이 보이지 않는 순간에도</p></div>
-    <div class="line l-pol" id="L2"><h2 class="mid gl">당신의 길잡이가 되어드립니다</h2><p class="sub2" id="L2s">언제나 같은 자리의 북극성, 아스타</p></div>
-    <div class="line l-mid" id="L3"><h2 class="mid">흔들리지 않고 나아가는 길</h2><p class="sub2" id="L3s">오늘의 작은 걸음이 내일의 빛이 됩니다</p></div>
+    <div class="line hero" id="L0"><h1 aria-label="ASTA"><span>A</span><span>S</span><span>T</span><span>A</span></h1></div>
+    <div class="line l-high" id="L1"><h2 class="mid">어둠이 찾아와도</h2></div>
+    <div class="line l-pol" id="L2"><h2 class="mid gl">당신의 길잡이가 되어드립니다</h2></div>
+    <div class="line l-mid" id="L3"><h2 class="mid">흔들리지 않고 나아가는 길</h2></div>
   </div>
   <div class="cue" id="cue" aria-hidden="true"></div>
 </section>
@@ -194,14 +194,16 @@ footer{position:relative;z-index:5;background:#010207;border-top:1px solid rgba(
 const CONFIG = {
   appLogo: "",
   links: {
-    app: "https://play.google.com/store/apps/details?id=com.astagodsaeng.app",   // ASTA 앱 (Google Play)
-    youtube: "https://www.youtube.com/@bulidup74",
+    app: "https://asta77.lovable.app",                                            // ASTA 앱 (지금은 웹앱)
+    appPlay: "https://play.google.com/store/apps/details?id=com.astagodsaeng.app", // Google Play 주소
+    youtube: "https://www.youtube.com/@ASTA74-q6b",
     instagram: "https://www.instagram.com/asta_life7/",
     blog: "https://blog.naver.com/asta_life"                                       // 네이버 블로그
   },
+  appOnPlay: false,   // ← Google Play 공개되면 true 로 바꾸면 '앱 받기'가 Play 스토어로 연결됨
   legal: {
-    privacy: "",   // 아스타 앱 개인정보 처리방침 주소 (비어 있으면 숨김)
-    terms: "",     // 아스타 앱 이용약관 주소 (비어 있으면 숨김)
+    privacy: "privacy.html",   // 아스타 앱 개인정보 처리방침
+    terms: "terms.html",       // 아스타 앱 이용약관
     contact: "mailto:buildup74.official@gmail.com?subject=" + encodeURIComponent("[ASTA] 문의")
   }
 };
@@ -217,7 +219,8 @@ const arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l
 const grid = document.getElementById("grid");
 STARS.forEach((s,i)=>{
   const li=document.createElement("li"), a=document.createElement("a");
-  a.className="card"; a.href=CONFIG.links[s.k]; a.target="_blank"; a.rel="noopener";
+  a.className="card"; a.href=(s.k==="app"&&CONFIG.appOnPlay)?CONFIG.links.appPlay:CONFIG.links[s.k];
+  if(s.k==="app"&&!CONFIG.appOnPlay) s.cta="앱 열기"; a.target="_blank"; a.rel="noopener";
   a.setAttribute("aria-label", `${s.n} — ${s.d}, ${s.cta} (새 창)`);
   a.style.cssText=`--ac:${s.ac};--ac2:${s.ac2};--ac3:${s.ac3};--btn:${s.btn};--btnt:${s.bt}`;a.dataset.rgb=s.rgb;
   a.innerHTML = `<img class="ic" src="img/logo/${s.k}.webp" width="76" height="76" alt="" decoding="async"><h3>${s.n}</h3><p>${s.d}</p><span class="go">${s.cta}${arrow}</span>`;
@@ -227,7 +230,6 @@ const legal=document.getElementById("legal");
 [["privacy","개인정보 처리방침"],["terms","이용약관"],["contact","문의"]].forEach(([k,t])=>{
   const u=CONFIG.legal[k]; if(!u) return;
   const a=document.createElement("a"); a.href=u; a.textContent=t;
-  if(!u.startsWith("mailto:")){a.target="_blank";a.rel="noopener";}
   legal.appendChild(a);
 });
 document.getElementById("yr").textContent=new Date().getFullYear();
@@ -504,14 +506,14 @@ const tout=(el,at,d=.3)=>tl.to(el+" .ch",{opacity:0,y:-26,filter:"blur(12px)",du
 tl.to("#L0",{opacity:0,y:-40,filter:"blur(14px)",duration:.5},.15).to("#cue",{opacity:0,duration:.3},.1)
   .to(S,{sun:0,cloud:.86,dark:.5,glow:0,duration:1.9},.3)
   .to(S,{storm:1,dark:.86,pitch:.015,rain:1,shake:1,duration:1.2},2.2);
-tin("#L1",1.0);tl.fromTo("#L1s",{opacity:0,y:14,filter:"blur(8px)"},{opacity:1,y:0,filter:"blur(0px)",duration:.4},2.2);tout("#L1",3.2);tl.to("#L1s",{opacity:0,filter:"blur(8px)",duration:.3},3.2);
+tin("#L1",1.0);tout("#L1",3.2);
 tl.to(S,{flash:1,duration:.06},2.98).to(S,{flash:0,duration:.3},3.04);
 // 2막 — 고개를 들면 보이는 북극성
 tl.to(S,{pitch:.55,cloud:.32,clear:1,stars:1,pol:1,dark:.32,rain:0,shake:.35,duration:1.6,ease:"power1.inOut"},3.6);
-tin("#L2",4.55,.45);tl.fromTo("#L2s",{opacity:0,y:14,filter:"blur(8px)"},{opacity:1,y:0,filter:"blur(0px)",duration:.4},5.0);tout("#L2",5.65);tl.to("#L2s",{opacity:0,filter:"blur(8px)",duration:.3},5.65);
+tin("#L2",4.55,.45);tout("#L2",5.65);
 // 3막 — 확신에 찬 항해
 tl.to(S,{pitch:.13,storm:.9,dark:.2,shake:.12,duration:1.1,ease:"power1.inOut"},5.8);
-tin("#L3",6.2);tl.fromTo("#L3s",{opacity:0,y:14,filter:"blur(8px)"},{opacity:1,y:0,filter:"blur(0px)",duration:.4},6.65);tout("#L3",7.45);tl.to("#L3s",{opacity:0,filter:"blur(8px)",duration:.3},7.45);
+tin("#L3",6.2);tout("#L3",7.45);
 // 4막 — 북극성 클로즈업
 tl.to(S,{pitch:.465,zoom:3.3,dark:.12,cloud:.18,duration:1.4,ease:"power2.inOut"},7.8).to(S,{fgA:0,duration:.6},8.1)
   .to({},{duration:1},9);
@@ -527,7 +529,6 @@ ScrollTrigger.create({trigger:"#temple",start:"top 75%",end:"top 10%",scrub:true
 // 첫 화면 등장(1회)
 if(!RM){
   gsap.from("#L0 h1 span",{y:60,opacity:0,filter:"blur(14px)",duration:1.4,ease:"power3.out",stagger:.09,delay:.2});
-  gsap.from("#L0 .sub",{opacity:0,y:16,duration:1.1,ease:"power2.out",delay:.9});
   gsap.fromTo(S,{glow:2.5},{glow:0,duration:2.6,ease:"power2.out",delay:.1});
 }
 
