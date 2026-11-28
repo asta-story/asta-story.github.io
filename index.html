@@ -43,9 +43,11 @@ a{color:inherit;text-decoration:none}
 #sea{position:fixed;inset:0;width:100vw;height:100lvh;display:block;z-index:0;background:
   radial-gradient(120% 70% at 30% 62%,#ff9a4a 0%,#b8452f 28%,#2a1424 58%,#03060d 100%)}
 #fx{position:fixed;inset:0;width:100vw;height:100lvh;z-index:2;pointer-events:none}
-.shipwrap{position:fixed;left:0;top:0;z-index:1;pointer-events:none;will-change:transform,opacity;opacity:0}
-.shipwrap .clip{overflow:hidden;height:100%}
-.shipwrap svg{display:block;width:100%;height:auto;filter:drop-shadow(0 -1.5px 0 rgba(255,222,170,.55)) drop-shadow(0 0 14px rgba(243,211,154,.18))}
+.fg{position:fixed;left:0;right:0;bottom:-2lvh;height:104lvh;z-index:1;pointer-events:none;will-change:transform,opacity}
+.fg svg{display:block;width:100%;height:100%;overflow:visible}
+#sailor,#hem,#head{transform-box:fill-box}
+#hem{transform-origin:50% 0}
+#head{transform-origin:50% 100%}
 .nogl #sea{background:radial-gradient(60% 40% at 50% 30%,rgba(243,211,154,.25),transparent 60%),linear-gradient(#03060d,#071327 70%,#03060d)}
 
 /* ===== 헤더 ===== */
@@ -65,7 +67,7 @@ a{color:inherit;text-decoration:none}
 .stage{position:fixed;inset:0;z-index:4;pointer-events:none;display:grid;place-items:center}
 .line{position:absolute;left:0;right:0;text-align:center;padding:0 24px;opacity:0;will-change:opacity,transform,filter}
 .line h1,.line h2,.line p{font-family:var(--serif);font-weight:200;color:var(--star);letter-spacing:-.01em;text-shadow:0 0 40px rgba(0,0,0,.55)}
-.hero{opacity:1;top:21vh}
+.hero{opacity:1;top:14vh}
 .hero h1{font-weight:300;font-size:clamp(64px,13vw,188px);letter-spacing:.32em;margin-right:-.32em;line-height:1}
 .hero h1 span{display:inline-block}
 .hero .sub{margin-top:clamp(18px,2.4vw,30px);font-size:clamp(16px,1.6vw,21px);letter-spacing:.42em;margin-right:-.42em;color:rgba(255,240,220,.9);font-weight:300}
@@ -76,7 +78,9 @@ a{color:inherit;text-decoration:none}
 .mid{font-size:clamp(30px,5vw,72px)!important;line-height:1.15}
 .gold{color:var(--gold)!important;text-shadow:0 0 30px rgba(243,211,154,.45),0 0 90px rgba(243,211,154,.25)!important;letter-spacing:.24em!important;margin-right:-.24em}
 .l-low{top:auto;bottom:18vh}
-.l-high{top:16vh}
+.l-high{top:15vh}
+.l-pol{top:60vh}
+.l-mid{top:31vh}
 
 /* ===== 4막: 네 개의 별 ===== */
 #temple{position:relative;z-index:5;min-height:100lvh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 clamp(20px,4vw,56px) clamp(56px,9vh,110px)}
@@ -128,32 +132,34 @@ footer{position:relative;z-index:5;background:#010207;border-top:1px solid rgba(
 <div class="veil" id="veil" aria-hidden="true"></div>
 
 <canvas id="sea" aria-hidden="true"></canvas>
-<div class="shipwrap" id="ship" aria-hidden="true"><div class="clip">
-<svg viewBox="0 0 400 262" xmlns="http://www.w3.org/2000/svg">
-  <defs><radialGradient id="lamp"><stop offset="0" stop-color="#fff1cc"/><stop offset=".35" stop-color="#f3c66e" stop-opacity=".9"/><stop offset="1" stop-color="#f3c66e" stop-opacity="0"/></radialGradient></defs>
-  <g fill="#03060c" stroke="#03060c" stroke-linejoin="round">
-    <path d="M24 212 L372 204 L360 226 C336 254 120 262 52 246 C40 236 31 226 24 212 Z"/>
-    <path d="M24 212 L24 186 L84 189 L84 212 Z"/>
-    <path d="M362 206 L398 186" stroke-width="4" fill="none"/>
-    <path d="M120 212 V62 M205 212 V34 M286 212 V70" stroke-width="5" fill="none"/>
-    <path d="M286 76 L397 188 L296 190 Q318 140 286 76 Z"/>
-    <!-- 주돛대 -->
-    <path d="M173 52 L237 52 Q249 72 241 94 L169 94 Q179 72 173 52 Z"/>
-    <path d="M167 100 L243 100 Q257 122 247 144 L163 144 Q175 122 167 100 Z"/>
-    <path d="M161 150 L249 150 Q265 174 253 198 L157 198 Q171 174 161 150 Z"/>
-    <!-- 앞돛대 -->
-    <path d="M260 80 L312 80 Q322 96 316 114 L256 114 Q264 96 260 80 Z"/>
-    <path d="M255 120 L317 120 Q329 137 321 155 L251 155 Q261 137 255 120 Z"/>
-    <path d="M251 161 L321 161 Q334 179 325 198 L247 198 Q258 179 251 161 Z"/>
-    <!-- 뒷돛대 -->
-    <path d="M96 72 L144 72 Q153 87 148 104 L92 104 Q100 87 96 72 Z"/>
-    <path d="M92 110 L148 110 Q158 127 151 146 L88 146 Q97 127 92 110 Z"/>
-    <path d="M88 152 L152 152 Q163 170 155 190 L84 190 Q94 170 88 152 Z"/>
-    <path d="M205 34 L226 38 L205 43 Z M120 62 L136 65 L120 69 Z M286 70 L301 73 L286 77 Z"/>
-  </g>
-  <circle cx="34" cy="180" r="16" fill="url(#lamp)"/>
-  <circle cx="34" cy="180" r="2.6" fill="#fff4d6"/>
-</svg></div></div>
+<div class="fg" id="fg" aria-hidden="true">
+<svg id="fgsvg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="dk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d121d"/><stop offset=".5" stop-color="#05080f"/><stop offset="1" stop-color="#010205"/></linearGradient><radialGradient id="lg"><stop offset="0" stop-color="#fff1cc"/><stop offset=".3" stop-color="#f3c66e" stop-opacity=".75"/><stop offset="1" stop-color="#f3a64e" stop-opacity="0"/></radialGradient></defs>
+<linearGradient id="rp" gradientUnits="userSpaceOnUse" x1="0" y1="640" x2="0" y2="120"><stop offset="0" stop-color="#03060c"/><stop offset=".55" stop-color="#03060c" stop-opacity=".85"/><stop offset="1" stop-color="#03060c" stop-opacity="0"/></linearGradient>
+<g stroke="url(#rp)" fill="none" stroke-linecap="round"><path d="M812 640 L996.8 -60" stroke-width="3.4"/><path d="M812 640 L560 -60" stroke-width="2.4"/><path d="M800 784 L1330 -60" stroke-width="2"/></g>
+<path d="M-120 1010 L800 790 L1720 1010 Z" fill="url(#dk)"/>
+<path d="M-120 1010 L763.2 794 M-10 1010 L767.6 794 M100 1010 L772.0 794 M210 1010 L776.4 794 M320 1010 L780.8 794 M430 1010 L785.2 794 M540 1010 L789.6 794 M650 1010 L794.0 794 M760 1010 L798.4 794 M870 1010 L802.8 794 M980 1010 L807.2 794 M1090 1010 L811.6 794 M1200 1010 L816.0 794 M1310 1010 L820.4 794 M1420 1010 L824.8 794 M1530 1010 L829.2 794 M1640 1010 L833.6 794" stroke="rgba(160,180,210,.05)" stroke-width="1.4" fill="none"/>
+<path d="M791 790 L810 640 L814 640 L809 790 Z" fill="#03060c"/>
+<path d="M-131.0 1010.0 L-131.0 680.0 L-109.0 680.0 L-109.0 1010.0 Z M144.4 944.9 L143.2 702.5 L158.7 702.5 L159.9 944.9 Z M294.0 909.6 L292.2 714.7 L304.2 714.7 L306.0 909.6 Z M388.1 887.3 L385.8 722.4 L395.6 722.4 L397.8 887.3 Z M452.6 872.1 L450.1 727.6 L458.3 727.6 L460.8 872.1 Z M499.7 861.0 L497.0 731.5 L504.1 731.5 L506.8 861.0 Z M535.5 852.5 L532.6 734.4 L538.9 734.4 L541.8 852.5 Z M563.7 845.8 L560.7 736.7 L566.3 736.7 L569.3 845.8 Z M586.5 840.5 L583.4 738.6 L588.4 738.6 L591.5 840.5 Z M605.2 836.0 L602.1 740.1 L606.7 740.1 L609.8 836.0 Z M621.0 832.3 L617.7 741.4 L622.0 741.4 L625.2 832.3 Z M634.3 829.1 L631.1 742.5 L635.0 742.5 L638.3 829.1 Z M645.9 826.4 L642.5 743.4 L646.2 743.4 L649.5 826.4 Z M655.9 824.1 L652.5 744.2 L655.9 744.2 L659.3 824.1 Z" fill="#03060c"/>
+<path d="M-120 654 L796 753 L796 759 L-120 702 Z" fill="#03060c"/>
+<path d="M-120 970 L800 786 L800 794 L-120 1030 Z" fill="#03060c"/>
+<path d="M1709.0 1010.0 L1709.0 680.0 L1731.0 680.0 L1731.0 1010.0 Z M1440.1 944.9 L1439.0 702.5 L1454.5 702.5 L1455.6 944.9 Z M1294.0 909.6 L1292.2 714.7 L1304.2 714.7 L1306.0 909.6 Z M1202.2 887.3 L1200.0 722.4 L1209.7 722.4 L1211.9 887.3 Z M1139.2 872.1 L1136.7 727.6 L1144.9 727.6 L1147.4 872.1 Z M1093.2 861.0 L1090.5 731.5 L1097.6 731.5 L1100.3 861.0 Z M1058.2 852.5 L1055.4 734.4 L1061.6 734.4 L1064.5 852.5 Z M1030.7 845.8 L1027.7 736.7 L1033.3 736.7 L1036.3 845.8 Z M1008.5 840.5 L1005.4 738.6 L1010.4 738.6 L1013.5 840.5 Z M990.2 836.0 L987.0 740.1 L991.6 740.1 L994.8 836.0 Z M974.8 832.3 L971.6 741.4 L975.8 741.4 L979.0 832.3 Z M961.7 829.1 L958.5 742.5 L962.4 742.5 L965.7 829.1 Z M950.5 826.4 L947.2 743.4 L950.8 743.4 L954.1 826.4 Z M940.7 824.1 L937.3 744.2 L940.7 744.2 L944.1 824.1 Z" fill="#03060c"/>
+<path d="M1720 654 L796 753 L796 759 L1720 702 Z" fill="#03060c"/>
+<path d="M1720 970 L800 786 L800 794 L1720 1030 Z" fill="#03060c"/>
+<g id="lantern"><circle cx="1236" cy="772" r="70" fill="url(#lg)" id="lglow"/><path d="M1236 732 V746" stroke="#03060c" stroke-width="2.5"/><path d="M1225 746 H1247 L1245 780 H1227 Z" fill="#05070c"/><rect x="1230" y="752" width="12" height="22" rx="2" fill="#ffd590" id="lcore"/></g>
+<g id="sailor" transform="translate(1010 985) scale(1.05)" fill="#02040a">
+<path d="M-40 -100 L-44 -12 L-52 0 L-10 0 L-11 -12 L-7 -100 Z"/><path d="M8 -100 L13 -12 L11 0 L54 0 L46 -12 L42 -100 Z"/>
+<g id="hem"><path d="M-52 -268 L52 -268 C60 -205 70 -145 80 -96 Q40 -86 2 -91 Q-38 -86 -72 -97 C-63 -150 -58 -205 -52 -268 Z"/></g>
+<path d="M-16 -431 C-30 -427 -50 -419 -63 -405 C-71 -396 -69 -370 -62 -350 L-50 -262 L50 -262 L62 -350 C69 -370 71 -396 63 -405 C50 -419 30 -427 16 -431 Z"/>
+<path d="M43.3 -395.0 L57.1 -328.5 L56.5 -300.9 L54.0 -241.1 L51.1 -213.6 L72.9 -210.4 L78.0 -238.9 L83.5 -299.1 L86.9 -331.5 L76.7 -401.0 Z"/><circle cx="60" cy="-398" r="17.0"/><circle cx="72" cy="-330" r="15.0"/><circle cx="70" cy="-300" r="13.5"/><circle cx="66" cy="-240" r="12.0"/><circle cx="62" cy="-212" r="11.0"/>
+<ellipse cx="61" cy="-203" rx="11" ry="14"/>
+<path d="M-48.0 -415.0 L-82.8 -431.1 L-103.2 -440.0 L-118.8 -476.3 L-129.6 -503.7 L-150.4 -496.3 L-141.2 -467.7 L-124.8 -424.0 L-97.2 -404.9 L-64.0 -385.0 Z"/><circle cx="-56" cy="-400" r="17.0"/><circle cx="-90" cy="-418" r="15.0"/><circle cx="-114" cy="-432" r="13.5"/><circle cx="-130" cy="-472" r="12.0"/><circle cx="-140" cy="-500" r="11.0"/>
+<ellipse cx="-142" cy="-505" rx="13" ry="15"/>
+<path d="M-26 -431 Q0 -447 26 -431 L32 -408 Q0 -420 -32 -408 Z"/>
+<g id="head"><path d="M-11 -446 L11 -446 L15 -426 L-15 -426 Z"/><ellipse cx="0" cy="-472" rx="24" ry="29"/><ellipse cx="-24" cy="-468" rx="5" ry="9"/><ellipse cx="24" cy="-468" rx="5" ry="9"/><path d="M-25 -474 C-27 -504 18 -512 26 -486 C31 -486 36 -482 38 -476 C33 -478 30 -476 27 -470 C24 -472 -22 -470 -25 -474 Z"/></g>
+</g>
+</svg>
+</div>
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <header class="hdr">
@@ -165,11 +171,11 @@ footer{position:relative;z-index:5;background:#010207;border-top:1px solid rgba(
 <section id="story" aria-label="이야기">
   <div class="stage" id="stage">
     <div class="line hero" id="L0"><h1 aria-label="ASTA"><span>A</span><span>S</span><span>T</span><span>A</span></h1><p class="sub">북극성을 향한 항해</p></div>
-    <div class="line" id="L1"><h2 class="big">어둠이 찾아오면</h2></div>
-    <div class="line l-low" id="L2"><h2 class="big">거센 파도</h2></div>
-    <div class="line l-low" id="L3"><h2 class="mid">고개를 들면</h2></div>
-    <div class="line l-low" id="L4"><h2 class="big gold">북극성</h2></div>
-    <div class="line l-high" id="L5"><h2 class="mid">흔들림 없이, 앞으로.</h2></div>
+    <div class="line l-high" id="L1"><h2 class="big">어둠이 찾아오면</h2></div>
+    <div class="line l-high" id="L2"><h2 class="big">거센 파도</h2></div>
+    <div class="line l-high" id="L3"><h2 class="mid">고개를 들면</h2></div>
+    <div class="line l-pol" id="L4"><h2 class="big gold">북극성</h2></div>
+    <div class="line l-mid" id="L5"><h2 class="mid">흔들림 없이, 앞으로.</h2></div>
   </div>
   <div class="cue" id="cue" aria-hidden="true"></div>
 </section>
@@ -233,7 +239,7 @@ document.getElementById("yr").textContent=new Date().getFullYear();
 
 /* ============ 장면 상태 ============ */
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const S = {sun:1, storm:.1, cloud:.3, pitch:.07, pol:0, stars:0, zoom:1, dark:0, flash:0, shake:.25, rain:0, ship:-.35, shipA:0, clear:0, glow:0};
+const S = {sun:1, storm:.1, cloud:.3, pitch:.07, pol:0, stars:0, zoom:1, dark:0, flash:0, shake:.25, rain:0, fgA:1, look:0, clear:0, glow:0};
 
 /* ============ WebGL 바다·하늘 ============ */
 const cv=document.getElementById("sea");
@@ -366,7 +372,6 @@ if(gl){
 if(!ok) document.documentElement.classList.add("nogl");
 
 const fx=document.getElementById("fx"),cx=fx.getContext("2d");
-const shipEl=document.getElementById("ship");
 let W=0,H=0,mobile=false;
 function size(){
   W=innerWidth;H=innerHeight;mobile=W<760;
@@ -374,7 +379,7 @@ function size(){
   cv.width=Math.round(W*base);cv.height=Math.round(H*base);
   if(ok) gl.viewport(0,0,cv.width,cv.height);
   const d=Math.min(devicePixelRatio||1,2);fx.width=W*d;fx.height=H*d;cx.setTransform(d,0,0,d,0,0);
-  const sw=Math.min(mobile?W*.74:W*.36,560);shipEl.style.width=sw+"px";shipEl.style.height=(sw*0.585)+"px";
+  
 }
 size();let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(size,150)});
 
@@ -390,36 +395,40 @@ function drawFX(t,dt){
       const x=r.x*W,y=r.y*H,L=34*r.l;cx.moveTo(x,y);cx.lineTo(x-L*.22,y+L);
     }cx.stroke();
   }
-  if(S.shipA>.02&&!RM){
-    const b=shipBox;if(b){
-      for(let i=0;i<2;i++)spray.push({x:b.bx+Math.random()*6,y:b.by-Math.random()*4,vx:-30-Math.random()*60,vy:-40-Math.random()*70,a:1});
-    }
+  if(bow&&S.fgA>.05&&!RM&&S.storm>.3&&bow.y<H){
+    // 파도에 부딪힐 때마다 뱃머리 위로 물보라
+    const burst=Math.max(0,Math.sin(t*1.5-1.2))**6*S.storm;
+    const n=Math.round(burst*(mobile?6:12));
+    for(let i=0;i<n;i++)spray.push({x:bow.x+(Math.random()-.5)*60*bow.s,y:bow.y,vx:(Math.random()-.5)*260,vy:-(160+Math.random()*320)*(.6+S.storm*.6),a:1,r:1+Math.random()*2.2});
   }
   for(let i=spray.length-1;i>=0;i--){const p=spray[i];p.vy+=160*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.a-=dt*1.2;
     if(p.a<=0){spray.splice(i,1);continue}
-    cx.fillStyle=`rgba(225,232,245,${p.a*.5*S.shipA})`;cx.fillRect(p.x,p.y,1.6,1.6);}
-  if(S.shipA>.02&&shipBox){
-    const b=shipBox,g=cx.createLinearGradient(b.sx,0,b.bx,0);
-    g.addColorStop(0,"rgba(210,220,235,0)");g.addColorStop(1,`rgba(210,220,235,${.28*S.shipA})`);
-    cx.fillStyle=g;cx.beginPath();cx.ellipse((b.sx+b.bx)/2-b.w*.25,b.wy+1,b.w*.95,2.6,0,0,Math.PI*2);cx.fill();
-    const m=cx.createLinearGradient(0,b.wy-b.w*.03,0,b.wy+b.w*.03);m.addColorStop(0,'rgba(3,7,16,0)');m.addColorStop(.5,`rgba(3,7,16,${.85*S.shipA})`);m.addColorStop(1,'rgba(3,7,16,0)');
-    cx.fillStyle=m;cx.fillRect(b.sx+b.w*.02,b.wy-b.w*.03,b.w*.9,b.w*.06);
-    cx.fillStyle=`rgba(243,211,154,${.35*S.shipA})`;cx.fillRect(b.sx+b.w*.12,b.wy-1,b.w*.72,1);
-  }
+    cx.fillStyle=`rgba(215,225,240,${p.a*.45*S.fgA})`;cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill();}
 }
 
-let shipBox=null;
-function placeShip(t){
-  const hz=H*(.5+Math.tan(S.pitch+Math.sin(t*1.3)*.006*S.shake)*S.zoom/1.4);
-  const w=parseFloat(shipEl.style.width),h=w*.585;
-  const wy=hz+H*.034;
-  const x=S.ship*W-w/2;
-  const bob=RM?0:Math.sin(t*1.25)*1.3, by=RM?0:Math.sin(t*1.6)*3;
-  shipEl.style.opacity=S.shipA;
-  shipEl.style.transform=`translate3d(${x}px,${wy-h+by}px,0) rotate(${bob}deg)`;
-  shipBox={sx:x,bx:x+w*.93,by:wy-h*.04+by,wy:wy+by,w};
+const fgEl=document.getElementById("fg"),fgSvg=document.getElementById("fgsvg"),hem=document.getElementById("hem"),head=document.getElementById("head"),
+  lglow=document.getElementById("lglow"),lcore=document.getElementById("lcore"),sailor=document.getElementById("sailor");
+let bow=null,rimKey="";
+function placeFG(t){
+  // 카메라가 배에 붙어 있음: 시선이 올라가면 갑판은 화면 아래로 내려감
+  const p0=.07, shift=H*(Math.tan(S.pitch)-Math.tan(p0))*S.zoom/1.4;
+  const heave=RM?0:Math.sin(t*1.5)*H*.006*S.shake;
+  fgSvg.setAttribute("viewBox", mobile?"640 0 620 1000":"0 0 1600 1000");
+  fgEl.style.opacity=S.fgA;
+  fgEl.style.transform=`translate3d(0,${shift+heave}px,0)`;
+  hem.style.transform=RM?"":`skewX(${Math.sin(t*2.3)*(1.2+3.5*S.storm*S.shake)}deg)`;
+  head.style.transform=`translateY(${S.look*5}px) scaleY(${1-S.look*.07})`;
+  const lamp=.35+.65*(1-S.sun);lglow.style.opacity=lamp*(.8+(RM?0:Math.sin(t*7)*.05+Math.sin(t*13)*.04));lcore.style.opacity=.5+.5*lamp;
+  // 테두리 빛: 노을엔 왼쪽 주황, 북극성 아래선 위쪽 금빛
+  const k=(S.sun>.5?"s":"n")+Math.round(S.pol*4);
+  if(k!==rimKey){rimKey=k;
+    const amber=`drop-shadow(-1.6px -.6px 0 rgba(255,150,80,${(.65*S.sun).toFixed(2)}))`,gold=`drop-shadow(0 -1.6px 0 rgba(255,226,175,${(.25+.45*S.pol).toFixed(2)}))`;
+    sailor.style.filter=`${S.sun>.5?amber:gold} drop-shadow(0 0 12px rgba(243,211,154,${(.12*S.pol).toFixed(2)}))`;}
+  // 뱃머리 끝 화면 좌표 (물보라 시작점)
+  const r=fgSvg.getBoundingClientRect(),vb=mobile?[640,620]:[0,1600],sc=Math.max(r.width/vb[1],r.height/1000);
+  const ox=r.left+(r.width-vb[1]*sc)/2-vb[0]*sc, oy=r.top+r.height-1000*sc;
+  bow={x:ox+800*sc,y:oy+780*sc,s:sc};
 }
-
 let last=performance.now(),T0=last,frames=0,acc=0,tune=0;
 function loop(now){
   const dt=Math.min((now-last)/1000,.05);last=now;
@@ -434,7 +443,7 @@ function loop(now){
     // 느린 기기 자동 화질 조절
     acc+=dt;frames++;if(acc>1.5&&tune<3){const fps=frames/acc;if(fps<40&&scale>.6){scale-=.15;size();tune++}acc=0;frames=0}
   }
-  placeShip(t);drawFX(t,dt);
+  placeFG(t);drawFX(t,dt);
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
@@ -456,17 +465,14 @@ tin("#L1",.85);tout("#L1",1.85);
 tin("#L2",2.45);tout("#L2",3.35);
 tl.to(S,{flash:1,duration:.06},2.98).to(S,{flash:0,duration:.3},3.04);
 // 2막 — 고개를 들면 보이는 북극성
-tl.to(S,{pitch:.55,cloud:.32,clear:1,stars:1,pol:1,dark:.32,rain:0,shake:.35,duration:1.6,ease:"power1.inOut"},3.6);
+tl.to(S,{pitch:.55,cloud:.32,clear:1,stars:1,pol:1,dark:.32,rain:0,shake:.35,look:1,duration:1.6,ease:"power1.inOut"},3.6);
 tin("#L3",3.75);tout("#L3",4.45);
 tin("#L4",4.75,.45);tout("#L4",5.55);
 // 3막 — 확신에 찬 항해
-tl.to(S,{pitch:.24,storm:.85,dark:.2,shake:.08,duration:1,ease:"power1.inOut"},5.8)
-  .to(S,{shipA:1,duration:.35},6.0)
-  .fromTo(S,{ship:-.18},{ship:1.2,duration:2,ease:"sine.inOut"},5.95);
-tin("#L5",6.4);tout("#L5",7.4);
-tl.to(S,{shipA:0,duration:.25},7.75);
+tl.to(S,{pitch:.13,storm:.9,dark:.2,shake:.12,look:0,duration:1.1,ease:"power1.inOut"},5.8);
+tin("#L5",6.3);tout("#L5",7.4);
 // 4막 — 북극성 클로즈업
-tl.to(S,{pitch:.465,zoom:3.3,dark:.12,cloud:.18,duration:1.4,ease:"power2.inOut"},7.8)
+tl.to(S,{pitch:.465,zoom:3.3,dark:.12,cloud:.18,duration:1.4,ease:"power2.inOut"},7.8).to(S,{fgA:0,duration:.6},8.1)
   .to({},{duration:1},9);
 
 // 4개의 별 — 동시에 점등
