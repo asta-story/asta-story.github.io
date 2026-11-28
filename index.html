@@ -45,7 +45,9 @@ a{color:inherit;text-decoration:none}
 #fx{position:fixed;inset:0;width:100vw;height:100lvh;z-index:2;pointer-events:none}
 .fg{position:fixed;left:0;right:0;bottom:-2lvh;height:104lvh;z-index:1;pointer-events:none;will-change:transform,opacity}
 .fg svg{display:block;width:100%;height:100%;overflow:visible}
-#sailor,#hem,#head{transform-box:fill-box}
+#sailor,#hem,#head,#torso,#lantern{transform-box:fill-box}
+#torso{transform-origin:50% 100%}
+#lantern{transform-origin:50% 0}
 #hem{transform-origin:50% 0}
 #head{transform-origin:50% 100%}
 .nogl #sea{background:radial-gradient(60% 40% at 50% 30%,rgba(243,211,154,.25),transparent 60%),linear-gradient(#03060d,#071327 70%,#03060d)}
@@ -92,13 +94,21 @@ a{color:inherit;text-decoration:none}
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   box-shadow:0 30px 60px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,236,200,.08);
   transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s}
-.card:hover{transform:translateY(-2px);border-color:rgba(243,211,154,.5);box-shadow:0 34px 70px -30px rgba(0,0,0,.9),0 0 40px -12px rgba(243,211,154,.35),inset 0 1px 0 rgba(255,236,200,.12)}
-.star{width:58px;height:58px;flex:none;filter:drop-shadow(0 0 10px rgba(243,211,154,.55));transition:filter .35s,transform .5s cubic-bezier(.2,.7,.2,1)}
-.card:hover .star{filter:drop-shadow(0 0 18px rgba(255,236,200,.95));transform:rotate(45deg) scale(1.05)}
+.card:hover{transform:translateY(-2px);box-shadow:0 34px 70px -30px rgba(0,0,0,.9),0 0 40px -12px rgba(243,211,154,.35),inset 0 1px 0 rgba(255,236,200,.12)}
+.ic{width:76px;height:76px;flex:none;border-radius:20px;display:block;filter:drop-shadow(0 0 14px var(--ac));animation:breathe 4.2s ease-in-out infinite;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ic{transform:translateY(-2px) scale(1.04)}
+@keyframes breathe{0%,100%{filter:drop-shadow(0 0 10px var(--ac))}50%{filter:drop-shadow(0 0 22px var(--ac))}}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(120% 60% at 50% 0%,var(--ac2),transparent 60%);opacity:.5;transition:opacity .35s}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.09) 50%,transparent 65%);background-size:250% 100%;background-position:120% 0;transition:background-position .9s cubic-bezier(.2,.7,.2,1)}
+.card:hover::after{background-position:-20% 0}
+.card:hover::before{opacity:.9}
+.card:hover{border-color:var(--ac3)}
+.card:hover .go{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+#const{position:fixed;inset:0;width:100vw;height:100lvh;z-index:4;pointer-events:none}
+.ch{display:inline-block;white-space:pre;will-change:transform,opacity,filter}
 .card h3{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--star);margin-top:22px;letter-spacing:.02em;line-height:1.2}
 .card p{font-size:14px;color:var(--mute);margin-top:8px;line-height:1.4}
 .go{margin-top:auto;width:100%;height:46px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid rgba(243,211,154,.45);color:var(--gold);font-size:14px;font-weight:500;transition:background .3s,color .3s,border-color .3s}
-.card:hover .go{background:var(--gold);color:#140e05;border-color:var(--gold)}
 .go svg{width:14px;height:14px;transition:transform .3s}
 .card:hover .go svg{transform:translateX(3px)}
 .card:active{transform:translateY(0) scale(.99)}
@@ -118,13 +128,13 @@ footer{position:relative;z-index:5;background:#010207;border-top:1px solid rgba(
 }
 @media (max-width:420px){
   .card{height:226px;padding:22px 12px 12px;border-radius:16px}
-  .star{width:46px;height:46px}
+  .ic{width:58px;height:58px;border-radius:15px}
   .card h3{font-size:19px;margin-top:16px}
   .card p{font-size:13px}
   .go{height:44px;font-size:13px}
   .hdr nav{font-size:13px}
 }
-@media (prefers-reduced-motion:reduce){.cue::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.cue::after,.ic{animation:none}}
 </style>
 </head>
 <body>
@@ -150,17 +160,18 @@ footer{position:relative;z-index:5;background:#010207;border-top:1px solid rgba(
 <g id="sailor" transform="translate(1010 985) scale(1.05)" fill="#02040a">
 <path d="M-40 -100 L-44 -12 L-52 0 L-10 0 L-11 -12 L-7 -100 Z"/><path d="M8 -100 L13 -12 L11 0 L54 0 L46 -12 L42 -100 Z"/>
 <g id="hem"><path d="M-52 -268 L52 -268 C60 -205 70 -145 80 -96 Q40 -86 2 -91 Q-38 -86 -72 -97 C-63 -150 -58 -205 -52 -268 Z"/></g>
-<path d="M-16 -431 C-30 -427 -50 -419 -63 -405 C-71 -396 -69 -370 -62 -350 L-50 -262 L50 -262 L62 -350 C69 -370 71 -396 63 -405 C50 -419 30 -427 16 -431 Z"/>
+<g id="torso"><path d="M-16 -431 C-30 -427 -50 -419 -63 -405 C-71 -396 -69 -370 -62 -350 L-50 -262 L50 -262 L62 -350 C69 -370 71 -396 63 -405 C50 -419 30 -427 16 -431 Z"/>
 <path d="M43.3 -395.0 L57.1 -328.5 L56.5 -300.9 L54.0 -241.1 L51.1 -213.6 L72.9 -210.4 L78.0 -238.9 L83.5 -299.1 L86.9 -331.5 L76.7 -401.0 Z"/><circle cx="60" cy="-398" r="17.0"/><circle cx="72" cy="-330" r="15.0"/><circle cx="70" cy="-300" r="13.5"/><circle cx="66" cy="-240" r="12.0"/><circle cx="62" cy="-212" r="11.0"/>
 <ellipse cx="61" cy="-203" rx="11" ry="14"/>
 <path d="M-48.0 -415.0 L-82.8 -431.1 L-103.2 -440.0 L-118.8 -476.3 L-129.6 -503.7 L-150.4 -496.3 L-141.2 -467.7 L-124.8 -424.0 L-97.2 -404.9 L-64.0 -385.0 Z"/><circle cx="-56" cy="-400" r="17.0"/><circle cx="-90" cy="-418" r="15.0"/><circle cx="-114" cy="-432" r="13.5"/><circle cx="-130" cy="-472" r="12.0"/><circle cx="-140" cy="-500" r="11.0"/>
 <ellipse cx="-142" cy="-505" rx="13" ry="15"/>
 <path d="M-26 -431 Q0 -447 26 -431 L32 -408 Q0 -420 -32 -408 Z"/>
-<g id="head"><path d="M-11 -446 L11 -446 L15 -426 L-15 -426 Z"/><ellipse cx="0" cy="-472" rx="24" ry="29"/><ellipse cx="-24" cy="-468" rx="5" ry="9"/><ellipse cx="24" cy="-468" rx="5" ry="9"/><path d="M-25 -474 C-27 -504 18 -512 26 -486 C31 -486 36 -482 38 -476 C33 -478 30 -476 27 -470 C24 -472 -22 -470 -25 -474 Z"/></g>
+</g><g id="head"><path d="M-11 -446 L11 -446 L15 -426 L-15 -426 Z"/><ellipse cx="0" cy="-472" rx="24" ry="29"/><ellipse cx="-24" cy="-468" rx="5" ry="9"/><ellipse cx="24" cy="-468" rx="5" ry="9"/><path d="M-25 -474 C-27 -504 18 -512 26 -486 C31 -486 36 -482 38 -476 C33 -478 30 -476 27 -470 C24 -472 -22 -470 -25 -474 Z"/></g>
 </g>
 </svg>
 </div>
 <canvas id="fx" aria-hidden="true"></canvas>
+<svg id="const" aria-hidden="true"></svg>
 
 <header class="hdr">
   <a class="logo" href="#story" data-jump aria-label="ASTA 처음으로">ASTA</a>
@@ -213,19 +224,19 @@ const CONFIG = {
 
 /* ============ 4개의 별 (모두 같은 규격) ============ */
 const STARS = [
-  {k:"app",       n:"ASTA 앱",   d:"갓생 루틴 앱", cta:"앱 받기"},
-  {k:"youtube",   n:"YouTube",   d:"영상 기록",    cta:"채널 보기"},
-  {k:"blog",      n:"Blog",      d:"글과 기록",    cta:"블로그 보기"},
-  {k:"instagram", n:"Instagram", d:"일상 기록",    cta:"인스타 보기"}
+  {k:"app",       n:"ASTA 앱",   d:"갓생 루틴 앱", cta:"앱 받기",     ac:"rgba(255,255,255,.55)", ac2:"rgba(255,255,255,.10)", ac3:"rgba(255,255,255,.55)", btn:"#f4f2ee", bt:"#0b0b0b", rgb:"255,255,255"},
+  {k:"youtube",   n:"YouTube",   d:"영상 기록",    cta:"채널 보기",   ac:"rgba(255,30,30,.75)",   ac2:"rgba(255,30,30,.16)",   ac3:"rgba(255,60,60,.6)",    btn:"#ff2020", bt:"#fff",    rgb:"255,60,60"},
+  {k:"blog",      n:"Blog",      d:"글과 기록",    cta:"블로그 보기", ac:"rgba(40,230,140,.65)",  ac2:"rgba(40,230,140,.13)",  ac3:"rgba(60,230,150,.55)",  btn:"#2fe39a", bt:"#04140c", rgb:"60,230,150"},
+  {k:"instagram", n:"Instagram", d:"일상 기록",    cta:"인스타 보기", ac:"rgba(230,60,150,.7)",   ac2:"rgba(230,60,150,.15)",  ac3:"rgba(240,90,150,.6)",   btn:"linear-gradient(90deg,#ff9a3c,#ff3f7f,#a347e6)", bt:"#fff", rgb:"240,90,160"}
 ];
-const starSVG = id => `<svg class="star" viewBox="0 0 64 64" aria-hidden="true"><defs><radialGradient id="g${id}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fffaf0"/><stop offset=".45" stop-color="#f3d39a"/><stop offset="1" stop-color="#c99a4e"/></radialGradient></defs><circle cx="32" cy="32" r="13" fill="#f3d39a" opacity=".16"/><path d="M32 2 C33.6 22 42 30.4 62 32 C42 33.6 33.6 42 32 62 C30.4 42 22 33.6 2 32 C22 30.4 30.4 22 32 2 Z" fill="url(#g${id})"/><circle cx="32" cy="32" r="3.2" fill="#fff"/></svg>`;
 const arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const grid = document.getElementById("grid");
 STARS.forEach((s,i)=>{
   const li=document.createElement("li"), a=document.createElement("a");
   a.className="card"; a.href=CONFIG.links[s.k]; a.target="_blank"; a.rel="noopener";
   a.setAttribute("aria-label", `${s.n} — ${s.d}, ${s.cta} (새 창)`);
-  a.innerHTML = `${starSVG(i)}<h3>${s.n}</h3><p>${s.d}</p><span class="go">${s.cta}${arrow}</span>`;
+  a.style.cssText=`--ac:${s.ac};--ac2:${s.ac2};--ac3:${s.ac3};--btn:${s.btn};--btnt:${s.bt}`;a.dataset.rgb=s.rgb;
+  a.innerHTML = `<img class="ic" src="img/logo/${s.k}.webp" width="76" height="76" alt="" decoding="async"><h3>${s.n}</h3><p>${s.d}</p><span class="go">${s.cta}${arrow}</span>`;
   li.appendChild(a); grid.appendChild(li);
 });
 const legal=document.getElementById("legal");
@@ -342,6 +353,9 @@ void main(){
     col+=vec3(1.,.62,.3)*pow(max(dot(rf,SD),0.),90.)*2.4*uSun;
     col+=vec3(1.,.9,.72)*pow(max(dot(rf,PD),0.),520.)*3.2*uPol;
     col+=vec3(1.,.9,.72)*pow(max(dot(rf,PD),0.),60.)*.18*uPol;
+    vec2 gc=p.xz*vec2(9.,4.5),gi=floor(gc),gf=fract(gc)-.5;float gl=step(.975,h21(gi+floor(T*5.)))*smoothstep(.3,.0,length(gf))*smoothstep(5.,16.,t);
+    col+=vec3(1.,.92,.75)*gl*pow(max(dot(rf,PD),0.),18.)*1.6*uPol*(1.-smoothstep(20.,90.,t));
+    col+=vec3(1.,.7,.4)*gl*pow(max(dot(rf,SD),0.),14.)*1.4*uSun*(1.-smoothstep(20.,90.,t));
     float foam=smoothstep(.9,1.35,h/A)*smoothstep(.25,1.,uStorm)*(1.-smoothstep(40.,160.,t));
     col=mix(col,vec3(.22,.27,.33)*(.25+.75*uSun+uPol*.35)+vec3(.5,.55,.7)*uFlash,foam*.75);
     vec3 hd=normalize(vec3(rd.x,.0005,rd.z));
@@ -375,19 +389,36 @@ const fx=document.getElementById("fx"),cx=fx.getContext("2d");
 let W=0,H=0,mobile=false;
 function size(){
   W=innerWidth;H=innerHeight;mobile=W<760;
-  const base=Math.min(devicePixelRatio||1,1.5)*(mobile?.55:.72)*scale;
+  const base=Math.min(devicePixelRatio||1,1.25)*(mobile?.6:1)*scale;
   cv.width=Math.round(W*base);cv.height=Math.round(H*base);
   if(ok) gl.viewport(0,0,cv.width,cv.height);
   const d=Math.min(devicePixelRatio||1,2);fx.width=W*d;fx.height=H*d;cx.setTransform(d,0,0,d,0,0);
   
 }
-size();let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(size,150)});
+size();let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>needSize=true,150)});
 
 /* 비·물보라 */
 const rain=Array.from({length:mobile?110:220},()=>({x:Math.random(),y:Math.random(),l:.6+Math.random()*.8,s:.7+Math.random()*.6}));
 const spray=[];
+const birds=[{x:.18,y:.24,s:1,p:0},{x:.27,y:.2,s:.75,p:1.7},{x:.34,y:.27,s:.6,p:3.1}];
+let meteor=null,nextMeteor=2,ring=0,ringT=-9;
+function bird(x,y,sz,ph,a){const f=Math.sin(ph)*.55;cx.strokeStyle=`rgba(20,10,14,${a})`;cx.lineWidth=Math.max(1.2,sz*.12);cx.lineCap="round";
+  cx.beginPath();cx.moveTo(x-sz,y-sz*f);cx.quadraticCurveTo(x-sz*.45,y-sz*(.35+f*.5),x,y);cx.quadraticCurveTo(x+sz*.45,y-sz*(.35+f*.5),x+sz,y-sz*f);cx.stroke();}
 function drawFX(t,dt){
   cx.clearRect(0,0,W,H);
+  // 노을 속 갈매기
+  if(S.sun>.08&&!RM){for(const b of birds){b.x-=dt*.012*b.s;if(b.x<-.08)b.x=1.08;b.p+=dt*(5.5+b.s*2);
+    bird(b.x*W,(b.y+Math.sin(t*.7+b.p*.1)*.01)*H,14*b.s*(W/1440+.4),b.p,.75*S.sun*S.fgA);}}
+  // 별똥별
+  if(S.stars>.7&&S.pol>.5&&!RM&&S.zoom<1.6){
+    if(!meteor&&t>nextMeteor){const sx=.15+Math.random()*.6;meteor={x:sx*W,y:(.05+Math.random()*.2)*H,vx:(Math.random()<.5?-1:1)*W*.55,vy:H*.28,life:0};nextMeteor=t+5+Math.random()*5;}
+    if(meteor){const m=meteor;m.life+=dt;m.x+=m.vx*dt;m.y+=m.vy*dt;const k=Math.sin(Math.min(m.life/.9,1)*Math.PI);
+      const g=cx.createLinearGradient(m.x,m.y,m.x-m.vx*.18,m.y-m.vy*.18);g.addColorStop(0,`rgba(255,248,230,${.9*k})`);g.addColorStop(1,"rgba(255,248,230,0)");
+      cx.strokeStyle=g;cx.lineWidth=1.6;cx.beginPath();cx.moveTo(m.x,m.y);cx.lineTo(m.x-m.vx*.18,m.y-m.vy*.18);cx.stroke();if(m.life>.9)meteor=null;}
+  }
+  // 북극성 파동 (4막)
+  if(S.zoom>2.6&&!RM){const pp=polarisXY();const e=(t-ringT);if(e>3.2)ringT=t;const r=e*H*.22,a=Math.max(0,.35*(1-e/3.2));
+    cx.strokeStyle=`rgba(255,232,190,${a})`;cx.lineWidth=1;cx.beginPath();cx.arc(pp.x,pp.y,r,0,6.283);cx.stroke();}
   if(S.rain>.01){
     cx.strokeStyle=`rgba(170,190,220,${.22*S.rain})`;cx.lineWidth=1;cx.beginPath();
     for(const r of rain){
@@ -406,9 +437,22 @@ function drawFX(t,dt){
     cx.fillStyle=`rgba(215,225,240,${p.a*.45*S.fgA})`;cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill();}
 }
 
+function drawConst(t){
+  if(consP<=.001){if(cons.firstChild)cons.innerHTML="";return;}
+  const pp=polarisXY(),cards=[...document.querySelectorAll("#temple .card")];
+  let h="";cards.forEach((c,i)=>{const ic=c.querySelector(".ic").getBoundingClientRect();const x=ic.left+ic.width/2,y=ic.top+2;
+    const L=Math.hypot(x-pp.x,y-pp.y),k=Math.min(1,Math.max(0,consP*1.25));
+    const tw=RM?1:.75+.25*Math.sin(t*2+i);
+    h+=`<line x1="${pp.x}" y1="${pp.y}" x2="${x}" y2="${y}" stroke="rgba(${c.dataset.rgb},${.42*tw})" stroke-width="1" stroke-dasharray="${L}" stroke-dashoffset="${L*(1-k)}"/>`;
+    h+=`<circle cx="${pp.x+(x-pp.x)*k}" cy="${pp.y+(y-pp.y)*k}" r="${2.2*k}" fill="rgba(${c.dataset.rgb},.95)"/>`;});
+  cons.innerHTML=h;
+}
 const fgEl=document.getElementById("fg"),fgSvg=document.getElementById("fgsvg"),hem=document.getElementById("hem"),head=document.getElementById("head"),
-  lglow=document.getElementById("lglow"),lcore=document.getElementById("lcore"),sailor=document.getElementById("sailor");
+  lglow=document.getElementById("lglow"),lcore=document.getElementById("lcore"),sailor=document.getElementById("sailor"),lantern=document.getElementById("lantern"),torso=document.getElementById("torso");
 let bow=null,rimKey="";
+function polarisXY(){const y=(Math.tan(.5547-S.pitch)*S.zoom/1.4);return{x:W/2,y:H*(.5-y)};}
+const cons=document.getElementById("const");let consP=0;
+const ST=ScrollTrigger;
 function placeFG(t){
   // 카메라가 배에 붙어 있음: 시선이 올라가면 갑판은 화면 아래로 내려감
   const p0=.07, shift=H*(Math.tan(S.pitch)-Math.tan(p0))*S.zoom/1.4;
@@ -417,7 +461,9 @@ function placeFG(t){
   fgEl.style.opacity=S.fgA;
   fgEl.style.transform=`translate3d(0,${shift+heave}px,0)`;
   hem.style.transform=RM?"":`skewX(${Math.sin(t*2.3)*(1.2+3.5*S.storm*S.shake)}deg)`;
-  head.style.transform=`translateY(${S.look*5}px) scaleY(${1-S.look*.07})`;
+  head.style.transform=`translateY(${S.look*5}px) scaleY(${1-S.look*.07}) rotate(${RM?0:Math.sin(t*.6)*1.2*(1-S.look)}deg)`;
+  lantern.style.transform=RM?"":`rotate(${Math.sin(t*1.5+.6)*(3+9*S.storm*S.shake)}deg)`;
+  torso.style.transform=RM?"":`scaleY(${1+Math.sin(t*1.1)*.006})`;
   const lamp=.35+.65*(1-S.sun);lglow.style.opacity=lamp*(.8+(RM?0:Math.sin(t*7)*.05+Math.sin(t*13)*.04));lcore.style.opacity=.5+.5*lamp;
   // 테두리 빛: 노을엔 왼쪽 주황, 북극성 아래선 위쪽 금빛
   const k=(S.sun>.5?"s":"n")+Math.round(S.pol*4);
@@ -429,10 +475,11 @@ function placeFG(t){
   const ox=r.left+(r.width-vb[1]*sc)/2-vb[0]*sc, oy=r.top+r.height-1000*sc;
   bow={x:ox+800*sc,y:oy+780*sc,s:sc};
 }
-let last=performance.now(),T0=last,frames=0,acc=0,tune=0;
+let last=performance.now(),T0=last,frames=0,acc=0,tune=0,needSize=false;
 function loop(now){
   const dt=Math.min((now-last)/1000,.05);last=now;
   const t=RM?4:(now-T0)/1000;
+  if(needSize){needSize=false;size();}
   if(ok&&!document.hidden){
     gl.uniform2f(U.R,cv.width,cv.height);gl.uniform1f(U.T,t);
     gl.uniform1f(U.uSun,S.sun);gl.uniform1f(U.uStorm,S.storm);gl.uniform1f(U.uCloud,S.cloud);
@@ -441,9 +488,9 @@ function loop(now){
     gl.uniform1f(U.uRoll,RM?0:Math.sin(t*.8)*.022*S.shake);gl.uniform1f(U.uClear,S.clear);gl.uniform1f(U.uGlow,S.glow);
     gl.drawArrays(gl.TRIANGLES,0,3);
     // 느린 기기 자동 화질 조절
-    acc+=dt;frames++;if(acc>1.5&&tune<3){const fps=frames/acc;if(fps<40&&scale>.6){scale-=.15;size();tune++}acc=0;frames=0}
+    acc+=dt;frames++;if(acc>1.5&&tune<3){const fps=frames/acc;if(fps<42&&scale>.5){scale-=.15;needSize=true;tune++}acc=0;frames=0}
   }
-  placeFG(t);drawFX(t,dt);
+  placeFG(t);drawFX(t,dt);drawConst(t);
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
@@ -455,8 +502,9 @@ if(!RM){lenis=new Lenis({lerp:.085,smoothWheel:true});lenis.on("scroll",ScrollTr
 
 const $=id=>document.getElementById(id);
 const tl=gsap.timeline({defaults:{ease:"none"},scrollTrigger:{trigger:"#story",start:"top top",end:"bottom bottom",scrub:RM?true:1.2}});
-const tin=(el,at,d=.35)=>tl.fromTo(el,{opacity:0,y:30,filter:"blur(12px)"},{opacity:1,y:0,filter:"blur(0px)",duration:d,ease:"power2.out"},at);
-const tout=(el,at,d=.3)=>tl.to(el,{opacity:0,y:-24,filter:"blur(10px)",duration:d,ease:"power2.in"},at);
+document.querySelectorAll(".line h2").forEach(h=>{const t=h.textContent;h.setAttribute("aria-label",t);h.innerHTML=[...t].map(c=>`<span class="ch" aria-hidden="true">${c}</span>`).join("");});
+const tin=(el,at,d=.35)=>{tl.set(el,{opacity:1},at);tl.fromTo(el+" .ch",{opacity:0,y:42,filter:"blur(14px)",scale:1.15},{opacity:1,y:0,filter:"blur(0px)",scale:1,duration:d,ease:"power3.out",stagger:d*.09},at);};
+const tout=(el,at,d=.3)=>tl.to(el+" .ch",{opacity:0,y:-26,filter:"blur(12px)",duration:d,ease:"power2.in",stagger:d*.05},at);
 // 1막 — 노을에서 어둠·거센 파도로
 tl.to("#L0",{opacity:0,y:-40,filter:"blur(14px)",duration:.5},.15).to("#cue",{opacity:0,duration:.3},.1)
   .to(S,{sun:0,cloud:.86,dark:.5,glow:0,duration:1.9},.3)
@@ -480,6 +528,8 @@ gsap.fromTo("#temple .card",{opacity:0,y:24,filter:"brightness(1.8) blur(6px)"},
   scrollTrigger:{trigger:"#temple",start:"top 70%",toggleActions:"play none none reverse"}});
 gsap.fromTo("#th",{opacity:0,letterSpacing:".3em"},{opacity:1,letterSpacing:".06em",duration:1.2,ease:"power3.out",
   scrollTrigger:{trigger:"#temple",start:"top 70%",toggleActions:"play none none reverse"}});
+
+ScrollTrigger.create({trigger:"#temple",start:"top 75%",end:"top 10%",scrub:true,onUpdate:st=>consP=st.progress,onLeaveBack:()=>consP=0});
 
 // 첫 화면 등장(1회)
 if(!RM){
